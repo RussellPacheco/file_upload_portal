@@ -42,7 +42,6 @@ export default createStore({
       try {
         let formData = new FormData()
         for (let file of payload) {
-          console.log(file)
           formData.append('file', file)
         }
         await axios.post("/api/files/save", formData, {headers: {'Content-Type': 'multipart/form-data'}})

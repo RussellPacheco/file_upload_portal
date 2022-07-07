@@ -61,7 +61,6 @@ export default {
             this.fileUploaded = false
         },
         saveFiles() {
-            console.log(this.files)
             this.$store.dispatch("saveFiles", this.files)
         },
         fileSizeFormatter(size, position) {
