@@ -2,6 +2,7 @@ import os, jwt
 from datetime import datetime, timedelta
 from flask import current_app, jsonify
 from werkzeug.utils import secure_filename
+from utils import get_fs
 
 def service_verify_login(data):
     if data["password"] != os.environ.get("PASSWORD"):
@@ -30,3 +31,10 @@ def service_save_files(data):
     
     return jsonify({"status": 0, "message": f"{len(filenames)} file(s) successfully saved."})
 
+def service_get_fs():
+    root = {
+        "name": "root",
+        "type": "directory",
+        "contents": get_fs("fs/")
+    }
+    return jsonify({"status": 0, "fs": root})

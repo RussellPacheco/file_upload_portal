@@ -8,7 +8,8 @@ export default createStore({
     blankPassword: false,
     failedAuthErr: undefined,
     jwt: null,
-    loginSuccess: false
+    loginSuccess: false,
+    currentFS: {},
   },
   getters: {
     isAuthenticated(state) {
@@ -16,12 +17,18 @@ export default createStore({
     }
   },
   mutations: {
+    setCurrentFS(state, payload) {
+      state.currentFS = payload
+    },
     setJwtToken(state, payload) {
       localStorage.token = payload.jwt.token
       state.jwt = payload.jwt
     },
     setFailedAuthentication(state, payload) {
       state.failedAuthErr = payload
+    },
+    setFailedTreeGet(state, payload) {
+      state.failedTreeGet = payload
     },
     setLoginSuccess(state) {
       state.loginSuccess = true
@@ -38,6 +45,22 @@ export default createStore({
         commit("setFailedAuthentication", err)
       }
     },
+    async saveFS({state}) {
+      try {
+        await axios.post("/api/fs", state.store.currentFS)
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async getFS({ commit }) {
+      try {
+        const res = await axios.get("/api/fs")
+        commit("setCurrentFS", res.data.fs)
+
+      } catch (err) {
+        commit("setFailedTreeGet", err)
+      }
+    }, 
     async saveFiles(_, payload) {
       try {
         let formData = new FormData()

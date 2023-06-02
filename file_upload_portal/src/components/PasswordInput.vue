@@ -1,8 +1,11 @@
 <template>
     <div class="password-input">
         <input type="password" v-model="password" @keypress.enter="login"/>
-        <div class="warning" v-if="blankPassword">The password cannot be blank</div>
-        <div class="warning" v-else-if="failedLogin">The password was incorrect</div>
+        <div v-if="failedLogin" style="margin: 10px">
+            {{ password }}
+        </div>
+        <!-- <div class="warning" v-if="blankPassword">The password cannot be blank</div>
+        <div class="warning" v-else-if="failedLogin">The password was incorrect</div> -->
     </div>
 </template>
 
@@ -28,7 +31,8 @@ export default {
                 }
                 await this.$store.dispatch("login", pass)
                 if (this.$store.state.loginSuccess == true) {
-                    this.$router.push({name: "fileupload"})
+                    this.$store.dispatch("getFS")
+                    this.$router.push({name: "navi"})
                 } else {
                     this.blankPassword = false
                     this.failedLogin = true

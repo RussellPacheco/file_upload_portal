@@ -49,3 +49,8 @@ def verify_login():
 def save_files():
     data = controller_save_files(request.files)
     return data
+
+@app.route("/api/fs", methods=["GET"])
+def get_fs():
+    data = controller_get_fs()
+    return data

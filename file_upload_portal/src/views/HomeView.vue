@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <h1>This site is restricted. Your IP address is being logged.</h1>
     <PasswordInput class="password-input"/>
   </div>
 </template>

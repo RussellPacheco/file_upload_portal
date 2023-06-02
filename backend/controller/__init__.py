@@ -15,3 +15,11 @@ def controller_save_files(json_obj):
     except Exception as e:
         print(e)
         return jsonify({"status": str(e)})
+    
+def controller_get_fs():
+    try:
+        data = service_get_fs()
+        return data
+    except Exception as e:
+        print(e)
+        return jsonify({"status": str(e)})
